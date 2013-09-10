@@ -3,6 +3,7 @@ var BugzillaClient = function(options) {
   this.username = options.username;
   this.password = options.password;
   this.timeout = options.timeout || 0;
+  this.debugApi = options.debugApi || 0;
   this.apiUrl = options.url ||
     (options.test ? "https://api-dev.bugzilla.mozilla.org/test/latest"
                   : "https://api-dev.bugzilla.mozilla.org/latest");
@@ -98,6 +99,12 @@ BugzillaClient.prototype = {
       XMLHttpRequest = require("xhr").XMLHttpRequest; // Addon SDK
     }
     catch(e) {}
+
+    if (this.debugApi) {
+      console.log("URL: " + url);
+      console.log("Method: " + method);
+      console.log("Body: " + body);
+    }
 
     var that = this;
     if(typeof XMLHttpRequest != "undefined") {
